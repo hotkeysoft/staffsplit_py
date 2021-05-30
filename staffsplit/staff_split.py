@@ -25,9 +25,10 @@ def process_sheet_file(file, args):
     config = vars(args)
     log.debug('config: %s', config)
     try:
-        image = Image.open(file)
+        image = Image.open(file).convert('RGB')
+        print(image.mode)
+        print(image.info)
         inverted_image = ImageOps.invert(image)
-        inverted_image = inverted_image.convert('1')
 
         bounding_box = inverted_image.getbbox()
         print(bounding_box)
