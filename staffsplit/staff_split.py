@@ -33,7 +33,8 @@ def process_sheet_file(file, args):
         bounding_box = inverted_image.getbbox()
         print(bounding_box)
 
-        left_column = (bounding_box[0], 0, bounding_box[0]+1, image.height)
+        margin = 4
+        left_column = (bounding_box[0]+margin, 0, bounding_box[0]+margin+1, image.height)
         cropped = image.crop(left_column)
         if cropped.height < 100:
             logging.error(f"Can't process image {file}")
@@ -51,7 +52,7 @@ def process_sheet_file(file, args):
         if len(staves) > 10:
             logging.error(f'Too many staves found ({len(staves)}), skipping')
 
-        for (index, staff) in enumerate(staves):
+        for (index, staff) in enumerate(staves, start=1):
             staff_height = 1200
             h_padding = 500
             mid = (staff[0] + staff[1])//2
